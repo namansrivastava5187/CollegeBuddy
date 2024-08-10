@@ -4,6 +4,7 @@ import Swiper from 'react-native-swiper';
 import LottieView from 'lottie-react-native';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { ChevronRightIcon } from 'react-native-heroicons/solid';
+import { useFonts } from 'expo-font';
 
 const animation4 = require('../../../App/Assets/Images/Animation - 1722785627001.json');
 const animation2 = require('../../../App/Assets/Images/Animation - 1722785534555.json');
@@ -13,6 +14,14 @@ const animation3 = require('../../../App/Assets/Images/Animation - 1722785621094
 const { width, height } = Dimensions.get('window');
 
 export default function IntroScreen({ navigation }) {
+  
+  let [fontsLoaded] = useFonts({
+    'InterBold': require('./Fonts/Inter_24pt-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
     <View style={{ flex: 1 }}>
       <Svg height="100%" width="100%" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
@@ -28,9 +37,9 @@ export default function IntroScreen({ navigation }) {
       <Swiper
         loop={false}
         showsPagination={true}
-        paginationStyle={{ position: 'absolute', top: -600, alignItems: 'center' }}
-        activeDot={<View style={{ width: 60, height: 7, borderRadius: 5, marginHorizontal: 5, backgroundColor: '#FFF' }} />}
-        dot={<View style={{ width: 60, height: 6, borderRadius: 5, marginHorizontal: 5, backgroundColor: 'rgba(255, 255, 255, 0.5)' }} />}
+        paginationStyle={{ position: 'absolute', top: -625, alignItems: 'center' }}
+        activeDot={<View style={{ width: 70, height: 5, borderRadius: 5, marginHorizontal: 5, backgroundColor: '#FFF' }} />}
+        dot={<View style={{ width: 70, height: 5, borderRadius: 5, marginHorizontal: 5, backgroundColor: 'rgba(255, 255, 255, 0.5)' }} />}
         autoplay={true}
         autoplayTimeout={3}
         index={0}
@@ -45,7 +54,7 @@ export default function IntroScreen({ navigation }) {
             style={{ width: width * 0.8, height: height * 0.5, marginTop: 200 }}
           />
           <View style={{ flex: 1 }}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 32, textAlign: 'center', marginTop: -85 ,fontFamily:"Roboto"}}>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 28, textAlign: 'center', marginTop: -85 ,fontFamily:"InterBold"}}>
               Welcome To CollegeBuddy
             </Text>
           </View>
@@ -59,7 +68,7 @@ export default function IntroScreen({ navigation }) {
             style={{ width: width * 0.8, height: height * 0.5, marginTop: 200 }}
           />
           <View style={{ flex: 1 }}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 32, textAlign: 'center', marginTop: -85 }}>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 28, textAlign: 'center', marginTop: -85, fontFamily:'InterBold' }}>
               Time Saving
             </Text>
           </View>
@@ -73,7 +82,7 @@ export default function IntroScreen({ navigation }) {
             style={{ width: width * 0.8, height: height * 0.5, marginTop: 200 }}
           />
           <View style={{ flex: 1 }}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 32, textAlign: 'center', marginTop: -85 }}>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 28, textAlign: 'center', marginTop: -85,fontFamily:'InterBold' }}>
               Track Your Attendance
             </Text>
           </View>
@@ -87,7 +96,7 @@ export default function IntroScreen({ navigation }) {
             style={{ width: width * 0.8, height: height * 0.3, marginTop: 270 }}
           />
           <View style={{ flex: 1,marginTop:10}}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 32, textAlign: 'center', marginBottom: 20 }}>
+            <Text style={{ color: 'white', fontSize: 28, textAlign: 'center', marginBottom: 20,fontFamily:'InterBold' }}>
               One Solution For All
             </Text>
           </View>
