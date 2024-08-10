@@ -32,7 +32,7 @@ export default function IntroScreen({ navigation }) {
         activeDot={<View style={{ width: 60, height: 7, borderRadius: 5, marginHorizontal: 5, backgroundColor: '#FFF' }} />}
         dot={<View style={{ width: 60, height: 6, borderRadius: 5, marginHorizontal: 5, backgroundColor: 'rgba(255, 255, 255, 0.5)' }} />}
         autoplay={true}
-        autoplayTimeout={3}
+        autoplayTimeout={6}
         index={0}
         scrollEnabled={true}
         showsButtons={false}

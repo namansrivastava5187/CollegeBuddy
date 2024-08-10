@@ -43,8 +43,14 @@ export default function LoginScreen() {
         } else if (errorCode === "auth/invalid-email") {
           ToastAndroid.show("Email not registered", ToastAndroid.LONG);
         }
+        else if(errorCode=="auth/network-request-failed"){
+          ToastAndroid.show("network error please try after some time",ToastAndroid.LONG)
+        }
       });
   };
+
+  
+  // forgot password handling function
 
   const handleForgotPassword = () => {
     if (!email) {

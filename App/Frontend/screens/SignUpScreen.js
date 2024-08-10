@@ -4,8 +4,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
 import { useNavigation } from '@react-navigation/native';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {  createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../../App/Backend/configs/FirebaseConfig";
+
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 export default function SignUpScreen() { // Changed the component name to match its purpose
   const navigation = useNavigation();
@@ -13,13 +15,14 @@ export default function SignUpScreen() { // Changed the component name to match 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  //function for creating account with email
   const OnCreateAccount = () => {
     if (!email&&!fullname&&!password) {
       ToastAndroid.show("Please enter all details",ToastAndroid.BOTTOM);
       return ;
     }
-createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
     console.log(user);
@@ -33,10 +36,34 @@ createUserWithEmailAndPassword(auth, email, password)
     if(errorCode=="auth/email-already-in-use"){
       ToastAndroid.show("email already exists",ToastAndroid.LONG)
     }
-    
-    // ..
+    else if(errorCode=="auth/network-request-failed"){
+      ToastAndroid.show("network error please try after some time",ToastAndroid.LONG)
+    }
   });
   };
+
+    //function for creating account with google
+
+
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
 
 
   return (
@@ -159,6 +186,7 @@ createUserWithEmailAndPassword(auth, email, password)
               borderRadius: 20,
               marginHorizontal: 12,
             }}
+            onPress={signInWithPopup}
           >
             <Image 
               source={require('../../../App/Assets/Images/google.png')}
