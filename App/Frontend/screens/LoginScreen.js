@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Image, ToastAndroid, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { 
+  View, Text, TouchableOpacity, TextInput, Image, ToastAndroid,
+  KeyboardAvoidingView, ScrollView, Platform, Dimensions, StyleSheet
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
 import { ArrowLeftIcon } from 'react-native-heroicons/solid';
@@ -13,18 +16,21 @@ import LottieView from 'lottie-react-native';
 const animation1 = require('../../Assets/Images/signuplottie.json');
 
 export default function LoginScreen() {
+  {/* font import from external files */}
   let [fontsLoaded] = useFonts({
-    'InterBold': require('./Fonts/Inter_24pt-Bold.ttf'),
+    'InterBold': require('./Fonts/Inter_18pt-Regular.ttf'),
   });
 
   if (!fontsLoaded) {
     return null;
   }
-  
+  {/* navigation and various input fields variable */}
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const { width, height } = Dimensions.get('window');
 
   const LoginUser = () => {
     if (!email || !password) {
@@ -36,7 +42,7 @@ export default function LoginScreen() {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        navigation.replace("Home");
+        navigation.replace("Homep");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -101,15 +107,15 @@ export default function LoginScreen() {
                   marginTop: 10,
                 }}
               >
-                <ArrowLeftIcon size="23" color="rgba(61, 143, 239, 1)" />
+                <ArrowLeftIcon size={23} color="rgba(61, 143, 239, 1)" />
               </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
               <LottieView
                 source={animation1}
                 autoPlay
                 loop
-                style={{ width: 400, height: 200, marginTop: -30 ,marginLeft:15}}
+                style={{ width: width * 0.9, height: height * 0.25, marginTop: -30 }}
               />
             </View>
           </SafeAreaView>
@@ -118,17 +124,16 @@ export default function LoginScreen() {
             style={{
               flex: 1,
               backgroundColor: 'white',
-              paddingHorizontal: 30,
+              paddingHorizontal: width * 0.075,
               paddingTop: 20, 
               borderTopLeftRadius: 38,
               borderTopRightRadius: 38,
               justifyContent: 'flex-start',
-              marginTop: -15, // Adjusted to avoid overlap
-              
+              marginTop: -15, 
             }}
           >
             <View style={{ marginBottom: 10, marginTop: 20 }}>
-              <View style={{ alignItems: 'flex-start', marginTop: -10, marginHorizontal: 10 }}>
+              <View style={{ alignItems: 'flex-start', marginTop: -5, marginHorizontal: 10 }}>
                 <Image 
                   source={require("../../Assets/Images/letterc.png")} 
                   style={{ height: 50, width: 50 }}
@@ -141,39 +146,43 @@ export default function LoginScreen() {
                   Hello Buddy, register to continue
                 </Text>
               </View>
-              <Text style={{ color: 'rgba(0, 0, 0, 1)', fontWeight: 'bold', marginLeft: 10, fontFamily: 'InterBold',marginTop:35 }}>Username or Email Address</Text>
+              <Text style={{ color: 'rgba(0, 0, 0, 1)', fontWeight: 'bold', marginLeft: 10, fontFamily: 'InterBold', marginTop: 25 }}>
+                Username/Email Address
+              </Text>
               <TextInput 
                 style={{
                   padding: 10,
-                  backgroundColor: 'white', // Changed to white
-                  color: 'gray',
-                  borderRadius:10,
+                  backgroundColor: 'white',
+                  color: 'black',
+                  borderRadius: 10,
                   marginBottom: 16,
                   fontFamily: 'InterBold',
-                  marginHorizontal:9,
-                  borderColor:'lightgray', // Outline border color light gray
-                  borderWidth: 1, // Added border width
+                  marginHorizontal: width * 0.02, // Adjusted margin
+                  borderColor: 'lightgray',
+                  borderWidth: 1,
                 }}
                 value={email}
                 onChangeText={setEmail}
-                placeholder='Enter username or email address' 
+                placeholder='Enter username/email address' 
                 keyboardType='email-address'
               />
-              <Text style={{ color: 'black', marginLeft: 10, fontWeight: 'bold',fontFamily: 'InterBold', marginTop:-5}}>Password</Text>
+              <Text style={{ color: 'black', marginLeft: 10, fontWeight: 'bold', fontFamily: 'InterBold', marginTop: -5 }}>
+                Password
+              </Text>
               
-              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 15 }}>
                 <View style={{ flex: 1, position: 'relative' }}>
                   <TextInput 
                     style={{
                       padding: 10,
-                      backgroundColor: 'white', // Changed to white
-                      color: 'gray',
+                      backgroundColor: 'white',
+                      color: 'black',
                       borderRadius: 10,
                       fontFamily: 'InterBold',
                       width: '95%',
-                      marginHorizontal:9,
-                      borderColor: 'lightgray', // Outline border color light gray
-                      borderWidth: 1, // Added border width
+                      marginHorizontal: width * 0.02, // Adjusted margin
+                      borderColor: 'lightgray',
+                      borderWidth: 1,
                     }}
                     secureTextEntry={!passwordVisible}
                     value={password}
@@ -202,7 +211,9 @@ export default function LoginScreen() {
                 onPress={handleForgotPassword}
                 style={{ marginTop: -10, marginLeft: 'auto', marginRight: 16 }}
               >
-                <Text style={{ color: 'black', fontWeight: 'bold', fontFamily: 'InterBold' }}>Forgot Password?</Text>
+                <Text style={{ color: 'black', fontWeight: 'bold', fontFamily: 'InterBold' }}>
+                  Forgot Password?
+                </Text>
               </TouchableOpacity>
               
               <TouchableOpacity 
@@ -212,8 +223,8 @@ export default function LoginScreen() {
                   borderRadius: 10,
                   alignItems: 'center',
                   marginTop: 15,
-                  width:'90%',
-                  marginHorizontal:15
+                  width: width * 0.75, // Adjusted width
+                  marginHorizontal: width * 0.05, // Adjusted margin
                 }}
                 onPress={LoginUser}
               >
@@ -221,55 +232,59 @@ export default function LoginScreen() {
                   Login
                 </Text>
               </TouchableOpacity>
-            </View>
+                            
+              <View style={{ alignItems: 'center', marginTop: 10, marginBottom: 10 }}>
+                <Text style={{ fontSize: 14, color: 'black', fontFamily: 'InterBold' }}>Or</Text>
+              </View>
 
-            <Text style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center', paddingVertical: 5, fontFamily: 'InterBold', marginBottom: -3 }}>
-              Or
-            </Text>
-
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10 }}>
-              <TouchableOpacity 
-                style={{
-                  padding: 6,
-                  backgroundColor: 'lightgray',
-                  borderRadius: 20,
-                  marginHorizontal: 5,
-                  marginVertical: 6,
-                }}
-              >
-                <Image 
-                  source={require("../../Assets/Images/google.png")}
-                  style={{ height: 28, width: 28 }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity 
-                style={{
-                  padding: 6,
-                  backgroundColor: 'lightgray',
-                  borderRadius: 20,
-                  marginHorizontal: 5,
-                  marginVertical: 6,
-                }}
-              >
-                <Image 
-                  source={require("../../Assets/Images/facebook.png")}
-                  style={{ height: 28, width: 28 }}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -6 }}>
-              <Text style={{ color: 'black', fontSize: 14, fontFamily: 'InterBold' }}>
-                Don't have an account? 
-              </Text>
-              <TouchableOpacity 
-                onPress={() => navigation.navigate('SignUp')}
-                style={{ marginLeft: 3 }}
-              >
-                <Text style={{ color: '#325AFF', fontFamily: 'InterBold', textDecorationLine: 'underline' }}>
-                  Register
+              <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -10 }}>
+                <TouchableOpacity 
+                  style={{
+                  
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 60,
+                    height: 60,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginHorizontal: width * 0.02, // Adjusted margin
+                  }}
+                >
+                  <Image 
+                    source={require('../../Assets/Images/google.png')} 
+                    style={{ width: 50, height: 50 }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity 
+                  style={{
+                
+                    padding: 10,
+                    borderRadius: 10,
+                    width: 60,
+                    height: 60,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginHorizontal: width * 0.02, // Adjusted margin
+                  }}
+                >
+                  <Image 
+                    source={require('../../Assets/Images/facebook.png')} 
+                    style={{ width: 50, height: 50 }}
+                  />
+                </TouchableOpacity>
+              </View>
+              
+              <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'center' }}>
+                <Text style={{ fontSize: 14, fontFamily: 'InterBold', color: 'black' }}>
+                  Don't have an account?
                 </Text>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                  <Text style={{ fontSize: 14, fontFamily: 'InterBold', color: 'rgba(61, 143, 239, 1)', marginLeft: 4 }}>
+                    Sign Up
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
             </View>
           </View>
         </View>

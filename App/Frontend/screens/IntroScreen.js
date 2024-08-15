@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import Swiper from 'react-native-swiper';
 import LottieView from 'lottie-react-native';
 import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
@@ -19,12 +19,23 @@ export default function IntroScreen({ navigation }) {
     'InterBold': require('./Fonts/Inter_24pt-Bold.ttf'),
   });
 
+  const [swiperIndex, setSwiperIndex] = useState(0);
+  
   if (!fontsLoaded) {
     return null;
   }
+
+  const handleNextPress = () => {
+    if (swiperIndex < 3) {
+      setSwiperIndex(swiperIndex + 1);
+    } else {
+      navigation.navigate('Welcome');
+    }
+  };
+
   return (
-    <View style={{ flex: 1 }}>
-      <Svg height="100%" width="100%" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+    <View style={styles.container}>
+      <Svg height="100%" width="100%" style={styles.backgroundSvg}>
         <Defs>
           <LinearGradient id="grad" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor="#0500FF" stopOpacity="1" />
@@ -37,91 +48,153 @@ export default function IntroScreen({ navigation }) {
       <Swiper
         loop={false}
         showsPagination={true}
-        paginationStyle={{ position: 'absolute', top: -625, alignItems: 'center' }}
-        activeDot={<View style={{ width: 70, height: 5, borderRadius: 5, marginHorizontal: 5, backgroundColor: '#FFF' }} />}
-        dot={<View style={{ width: 70, height: 5, borderRadius: 5, marginHorizontal: 5, backgroundColor: 'rgba(255, 255, 255, 0.5)' }} />}
+        paginationStyle={styles.paginationStyle}
+        activeDot={<View style={styles.activeDot} />}
+        dot={<View style={styles.dot} />}
         autoplay={true}
         autoplayTimeout={3}
-        index={0}
+        index={swiperIndex}
+        onIndexChanged={(index) => setSwiperIndex(index)}
         scrollEnabled={true}
         showsButtons={false}
       >
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.slide}>
           <LottieView
             source={animation1}
             autoPlay
             loop
-            style={{ width: width * 0.8, height: height * 0.5, marginTop: 200 }}
+            style={styles.animation}
           />
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 28, textAlign: 'center', marginTop: -85 ,fontFamily:"InterBold"}}>
-              Welcome To CollegeBuddy
-            </Text>
-          </View>
+          <Text style={styles.title}>
+            Welcome To CollegeBuddy
+          </Text>
+          <TouchableOpacity
+            style={styles.nextButton}
+            onPress={handleNextPress}
+          >
+            <ChevronRightIcon size={30} color="black" />
+          </TouchableOpacity>
         </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.slide}>
           <LottieView
             source={animation2}
             autoPlay
             loop
-            style={{ width: width * 0.8, height: height * 0.5, marginTop: 200 }}
+            style={styles.animation}
           />
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 28, textAlign: 'center', marginTop: -85, fontFamily:'InterBold' }}>
-              Time Saving
-            </Text>
-          </View>
+          <Text style={styles.title}>
+            Time Saving
+          </Text>
+          <TouchableOpacity
+            style={styles.nextButton}
+            onPress={handleNextPress}
+          >
+            <ChevronRightIcon size={30} color="black" />
+          </TouchableOpacity>
         </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.slide}>
           <LottieView
             source={animation3}
             autoPlay
             loop
-            style={{ width: width * 0.8, height: height * 0.5, marginTop: 200 }}
+            style={styles.animation}
           />
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 28, textAlign: 'center', marginTop: -85,fontFamily:'InterBold' }}>
-              Track Your Attendance
-            </Text>
-          </View>
+          <Text style={styles.title}>
+            Track Your Attendance
+          </Text>
+          <TouchableOpacity
+            style={styles.nextButton}
+            onPress={handleNextPress}
+          >
+            <ChevronRightIcon size={30} color="black" />
+          </TouchableOpacity>
         </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={styles.slide}>
           <LottieView
             source={animation4}
             autoPlay
             loop
-            style={{ width: width * 0.8, height: height * 0.3, marginTop: 270 }}
+            style={styles.animation}
           />
-          <View style={{ flex: 1,marginTop:10}}>
-            <Text style={{ color: 'white', fontSize: 28, textAlign: 'center', marginBottom: 20,fontFamily:'InterBold' }}>
-              One Solution For All
-            </Text>
-          </View>
-          
+          <Text style={[styles.title, { marginBottom: 20 }]}>
+            One Solution For All
+          </Text>
           <TouchableOpacity
-            style={{
-              position: 'absolute',
-              bottom: 40,
-              right: 50,
-              backgroundColor: 'white',
-              borderRadius: 50,
-              width: 50,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              
-              
-            }}
-            onPress={() => navigation.navigate('Welcome')}
+            style={styles.nextButton}
+            onPress={handleNextPress}
           >
             <ChevronRightIcon size={30} color="black" />
           </TouchableOpacity>
-        
         </View>
       </Swiper>
     </View>
   );
 }
+
+// Stylesheet
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  backgroundSvg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  paginationStyle: {
+    position: 'absolute',
+    bottom: 20,
+  },
+  activeDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 5,
+    backgroundColor: '#FFF',
+    marginBottom:20
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    marginBottom:20
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+    
+  },
+  animation: {
+    width: width * 0.9,
+    height: height * 0.6,
+    marginTop: -100,
+  },
+  title: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 32,
+    textAlign: 'center',
+    marginTop: -45,
+    fontFamily: 'InterBold',
+  },
+  nextButton: {
+    position: 'absolute',
+    bottom: 40,
+    right: 40,
+    backgroundColor: 'white',
+    borderRadius: 25,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
