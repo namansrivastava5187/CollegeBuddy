@@ -20,7 +20,7 @@ export default function SignUpScreen() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   let [fontsLoaded] = useFonts({
-    'InterBold': require('./Fonts/Inter_24pt-Bold.ttf'),
+    'InterBold': require('./Fonts/Inter_18pt-Light.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -42,7 +42,7 @@ export default function SignUpScreen() {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        navigation.replace("Home");
+        navigation.replace("Homep");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: 'flex-start',
-    marginTop: 20,
+    marginTop: height * 0.03,
     marginHorizontal: width * 0.08,
   },
   logoImage: {
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     width: width * 0.2,
   },
   headerText: {
-    marginTop: 10,
+    marginTop: height * 0.02,
     color: '#000000',
     fontSize: width * 0.06,
     fontFamily: 'InterBold',
@@ -197,28 +197,28 @@ const styles = StyleSheet.create({
     fontFamily: 'InterBold',
   },
   subHeaderText: {
-    marginTop: -2,
+    marginTop: -height * 0.01,
     color: 'grey',
     fontFamily: 'InterBold',
   },
   formContainer: {
     flex: 1,
-    marginTop: 10,
+    marginTop: height * 0.02,
     paddingHorizontal: width * 0.04,
   },
   label: {
     color: 'rgba(0, 0, 0, 1)',
-    marginBottom: 5,
+    marginBottom: height * 0.005,
     marginHorizontal: width * 0.04,
     fontFamily: 'InterBold',
   },
   input: {
-    padding: 12,
+    padding: height * 0.015,
     borderColor: 'lightgray',
     borderWidth: 1,
-    color: 'gray',
+    color: 'black',
     borderRadius: 5,
-    height: 45,
+    height: height * 0.06,
     width: width * 0.8,
     marginHorizontal: width * 0.04,
     backgroundColor: 'transparent',
@@ -227,71 +227,67 @@ const styles = StyleSheet.create({
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: height * 0.02,
   },
   eyeIcon: {
     position: 'absolute',
-    right: 50,
+    right: width * 0.1,
     top: '50%',
-    transform: [{ translateY: -10 }],
+    transform: [{ translateY: -height * 0.015 }],
   },
   registerButton: {
-    paddingVertical: 10,
+    paddingVertical: height * 0.014,
     backgroundColor: '#3D8FEF',
     borderRadius: 10,
     alignItems: 'center',
-    marginTop: 20,
-    width: width * 0.8,
-    marginHorizontal: width * 0.05,
+    justifyContent:'center',
+    marginTop: height * 0.015,
+    width: width * 0.75,
+    marginHorizontal: width * 0.055,
   },
   registerButtonText: {
-    fontSize: 18,
+    fontSize: width * 0.045,
     color: '#000000',
     fontFamily: 'InterBold',
   },
   orText: {
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: width * 0.045,
     textAlign: 'center',
-    paddingVertical: 10,
+    paddingVertical: height * 0.02,
     fontFamily: 'InterBold',
+    marginTop: height * -0.015,
   },
   socialContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 50,
+    marginTop: height * 0.002,
   },
-  socialButton: {
-    padding: 10,
-    backgroundColor: 'lightgray',
-    borderRadius: 25,
-    marginHorizontal: width * 0.02,
-  },
+  
   socialIcon: {
-    width: 30,
-    height: 30,
+    width: width * 0.13,
+    height: width * 0.13,
+    borderRadius: width * 0.035,
+    marginHorizontal:width*0.020,
+    marginLeft:width*0.03,
+    marginRight:width*-0.03,
+    marginTop: height * -0.015,
   },
   footerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 10,
+    marginBottom: height * 0.05,
+    marginTop: height * 0.009,
   },
   footerText: {
-    color: 'black',
-    fontSize: 14,
+    fontSize: width * 0.04,
     fontFamily: 'InterBold',
-    fontSize: 15,
-    marginTop: -45,
   },
   loginButton: {
-    marginLeft: 3,
+    marginLeft: width * 0.02,
   },
   loginButtonText: {
-    color: '#325AFF',
-    fontWeight: 'bold',
+    color: '#3D8FEF',
+    fontSize: width * 0.04,
     fontFamily: 'InterBold',
-    textDecorationLine: 'underline',
-    fontSize: 15,
-    marginTop: -45,
   },
 });
