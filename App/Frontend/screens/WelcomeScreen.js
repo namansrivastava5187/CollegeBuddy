@@ -21,7 +21,7 @@ export default function WelcomeScreen() {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'rgba(58, 54, 244, 1)' }}> 
     
       <View style={{ flex: 1, justifyContent: 'space-around', marginVertical: 16 }}> 
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 32, textAlign: 'center', marginTop:50, fontfamily: 'InterBold'}}> 
+        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 40, textAlign: 'center', marginTop:50, fontfamily: 'InterBold'}}> 
          Welcome to {'\n'}CollegeBuddy
         </Text>
         <View >
@@ -29,7 +29,7 @@ export default function WelcomeScreen() {
                 source={animation1}
                 autoPlay
                 loop
-                style={{  width:350, height: 350, marginHorizontal:20}}
+                style={{  width:370, height: 370, marginHorizontal:20}}
               />
         </View>
         <View style={{ marginTop: 20 }}>
