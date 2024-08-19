@@ -6,6 +6,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../App/Backend/configs/FirebaseConfig";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
+import {provider} from '../../Backend/configs/FirebaseConfig';
 
 const { width, height } = Dimensions.get('window');
 
@@ -27,6 +28,8 @@ export default function SignUpScreen() {
     return null;
   }
 
+
+// creating account for email
   const OnCreateAccount = () => {
     if (!fullname || !username || !email || !password || !confirmPassword) {
       ToastAndroid.show("Please enter all details", ToastAndroid.BOTTOM);
@@ -53,6 +56,28 @@ export default function SignUpScreen() {
         }
       });
   };
+
+  //creating account for google
+  const OnCreateAccountGoogle = async () => {
+    try {
+      // Get the user's ID token
+      await GoogleSignin.hasPlayServices();
+      const { idToken } = await GoogleSignin.signIn();
+  
+      // Create a Google credential with the token
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  
+      // Sign in the user with the credential
+      const userCredential = await auth().signInWithCredential(googleCredential);
+  
+      // User successfully signed in
+      console.log('User Info:', userCredential.user);
+    } catch (error) {
+      console.error('Error during Google Sign-In:', error);
+    }
+  };
+  
+  
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -136,11 +161,13 @@ export default function SignUpScreen() {
           </View>
           
           <View style={styles.socialContainer}>
-            <TouchableOpacity style={styles.socialButton}>
+            <TouchableOpacity style={styles.socialButton}
+              onPress={OnCreateAccountGoogle}>
               <Image 
                 source={require('../../../App/Assets/Images/google.png')}
                 style={styles.socialIcon} 
                 resizeMode="contain"
+                
               />
             </TouchableOpacity>
             <TouchableOpacity style={[styles.socialButton, { marginHorizontal: width * 0.05 }]}>
@@ -246,7 +273,7 @@ const styles = StyleSheet.create({
   },
   registerButtonText: {
     fontSize: 18,
-    color: '#000000',
+    color: '#ffffff',
     fontFamily: 'InterBold',
   },
   orText: {

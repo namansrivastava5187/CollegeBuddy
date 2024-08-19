@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { GoogleAuthProvider } from "firebase/auth";
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -17,7 +18,14 @@ const firebaseConfig = {
   measurementId: "G-ZDG29MDTVZ"
 };
 
+// Configure Google Sign-In
+GoogleSignin.configure({
+  webClientId: '1049640210168-n4lkotv45nq8b3ju845cc9gif4srk47u.apps.googleusercontent.com', // From Firebase console
+  offlineAccess: true, // If you want to access Google API
+});
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const provider = new GoogleAuthProvider();
+
